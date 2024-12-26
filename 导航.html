@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图导航</title>
+    <!--引用百度地图API文件-->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Bz28SQMNVFEUOMhpGjwIg1tuARaYGxWd"></script>
+	<style type="text/css">
+        
+         html {
+		    	height: 100%
+		    }
+		    
+		    body {
+		    	height: 100%;
+		    	margin: 0px;
+		    	padding: 0px
+		    }
+		    /*设置容器样式*/
+		    #container {
+		    	height: 100%;
+				height:100%;
+				font-family: "微软雅黑";
+				margin:0;
+				overflow:hidden;
+		    }
+            #controls {
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+		</style>
+
+</head>
+<body>
+	<div id="container"></div>
+    <div id="controls">
+        <label for="origin">出发点：</label>
+        <input type="text" id="origin" placeholder="输入出发点地址或坐标">
+        <br>
+        <label for="destination">目的地：</label>
+        <input type="text" id="destination" placeholder="输入目的地地址或坐标">
+        <br>
+        <button onclick="planRoute()">规划路线</button>
+    </div>
+    <script>
+        //BMap是一个命名空间，所有的类都在该命名空间之下。
+        //该命名空间下的Map类表示地图。
+        //1.通过new操作符可以创建一个地图实例。
+        var map = new BMap.Map("container");
+        //2.该命名空间下的Point类来创建一个坐标点。
+        var point = new BMap.Point(100.2,25.8);
+        //3.执行地图初始化。地图只有经过初始化才能执行其他操作
+        map.centerAndZoom(point,11);
+
+        //4.开启鼠标滚轮缩放（默认关闭）
+        map.enableScrollWheelZoom(true);
+
+        map.setTilt(45);
+      // 旋转动画
+        map.setHeading(90, { duration: 5000 });
+
+        //5.向地图添加控件（添加控件前，地图需要进行初始化。）
+        //可以使用Map.addControl()方法向地图添加控件。
+        map.addControl(new BMap.NavigationControl());//平移缩放控件（PC端默认位于地图左上方）
+        //添加多个控件
+        map.addControl(new BMap.ScaleControl());//比例尺控件（默认位于地图左下方，显示地图的比例关系）
+        map.addControl(new BMap.OverviewMapControl());//缩略地图控件（默认位于地图右下方，是一个可折叠的缩略地图）
+        map.addControl(new BMap.MapTypeControl());//地图类型控件（默认位于地图右上方）
+        
+        //规划路线的函数
+        function planRoute(){
+            var origin = document.getElementById("origin").value;
+            var destination = document.getElementById("destination").value;
+            
+            // 创建一个驾驶路线实例
+            var driving = new BMap.DrivingRoute(map, {
+                renderOptions: {map: map, autoViewport: true}
+            });
+
+            // 发起驾车路线检索
+            driving.search(origin, destination, function(result){
+                if(driving.getStatus() == BMAP_STATUS_SUCCESS){
+                    alert('路线规划成功！');
+                } else {
+                    alert('路线规划失败：' + driving.getStatus());
+                }
+            });
+        }
+        </script>
+    
+    </body>
+</html>

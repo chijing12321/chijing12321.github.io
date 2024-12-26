@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link  type="text/css" href="首页.CSS" rel="stylesheet">
+        <!-- <script type="text/javascript" src="js/pptBox.js"></script> -->
+        <title>城市旅行笔记</title>
+        <style>
+            /* 轮播样式 */
+            .carousel {
+                position: relative;
+                width: 1000px;
+                height: 500px;
+                overflow: hidden;
+                margin: auto;
+            }
+            .carousel img {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 100%;
+                transition: left 1s;
+            }
+            .carousel img.active {
+                left: 0;
+            }
+            </style>
+    </head>
+
+    <body>
+        <!-- <audio src="travel.mp4" autoplay loop></audio> -->
+        <div class="con">
+            <div style="position: fixed; top: 0px;right: 0px; font-size: 30px;"> </div>
+            <header>
+                <div class="logo">
+                    <a href=""><img src="logo.png" width="100"></a>
+                </div>
+                <nav>
+                    <ul>
+
+                        <li><a href="旅行路线.html">旅行路线</a></li>
+                        <li><a href="景点打卡.html">景点打卡</a></li>
+                        <li><a href="心情随笔.html">心情随笔</a></li>
+                        <li><a href="导航.html">路线导航</a></li>
+
+
+                    </ul>
+                </nav>
+                <div class="clear"></div>
+            </header>
+            <div class="clear"></div>
+            <div class="lunbo carousel">
+                <img src="图片1.jpg" class="active" >
+                <img src="图片2.jpg" >
+                <img src="图片3.jpg" >
+                <img src="图片4.jpg" >
+                <img src="图片5.jpg" >
+                <img src="图片6.jpg" >
+                <img src="图片7.jpg" >
+                <img src="图片8.jpg" >
+                <img src="图片9.jpg" >
+
+                <script>
+                     // 简单的图片轮播逻辑
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.carousel img');
+        const totalImages = images.length;
+ 
+        function showNextImage() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % totalImages;
+            images[currentIndex].classList.add('active');
+        }
+ 
+        // 每3秒切换到下一张图片
+        setInterval(showNextImage, 3000);
+                </script>
+            </div>
+            <div class="clear"></div>
+            <div class="main">
+                <h2>大理市简介</h2>
+                <p> 大理市是大理白族自治州州府所在地，是集国家级历史文化名城、风景名胜区、自然保护区于一身的城市，市内设有国家级经济开发区。境内苍山洱海珠联璧合，相映成趣。素有“高原明珠”“东方瑞士”之美誉。</p>
+                <h3>位置面积</h3>
+                <p>大理市地处大理白族自治州中部,位于东经99°58'至100°27',北纬25°25,至25°58'之间,东与宾川、祥云相连,南与巍山、弥渡相邻,西接漾濞,以点苍山为界,北与洱源、鹤庆交界,大理市国土调查总面积1738.6052平方千米,其中山地面积1240.8912平方千米,占总面积的71.37%;坝区面积(含洱海)497.714平方千米,占总面积的28.63%;洱海水域面积252.8127平方千米,占总面积的14.54%。</p>
+                <h3>地形地貌</h3>
+                <p> 大理市主要由高山分水岭、冰蚀地形、高山山麓洪积扇地形组成。东有玉案山，南有哀牢山，西有点苍山，三山环状相连。中间是洱海断陷盆地及西高东低的狭长缓坡区。点苍山属横断山脉云岭余脉，由十九座南北走向的山峰组成,海拔3500~4122米,是本市的主要山脉。点苍山玉局峰为境内最高峰,海拔4097米。洱海是全国著名的七大淡水湖泊之一,走向与苍山平行。南北长40.5千米,东西宽3~9千米,蓄水量30亿立方米。西洱河是洱海的唯一天然出水口，位于西洱河谷的太邑乡坦底摩村海拔仅1340米，是市内最低点。</p>
+                <h3>气候特点</h3>
+                <p>大理市属北亚热带高原季风气候类型,年均气温14.9℃,年日照时数2227.5小时,年降水量为1051.1毫米,年均无霜期228天。</p>
+                <h3>人口民族</h3>
+                <p>截至2023年末,大理市常住人口77.11万人,户籍总人口数66.03万人,增长0.6%,其中乡村人口27.07万人,城镇人口38.96万人。大理市是以白族为主的多民族聚居区,白、彝、汉、回等为世居民族,2023年,大理市白族人口44.66万人,占总人口的67.64%;彝族人口2.23万人,占总人口的3.71%;汉族人口16.24万人,占总人口的24.59%;回族人口1.92万人,占总人口的2.90%;其他民族人口0.98万人,占1.16%.</p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <h2>风景欣赏</h2>
+                <div class="main_list">
+                    <ul>
+                        <li>
+                            <a href="#"><img class="img2" src="图片8.jpg"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="img2" src="图片4.jpg"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="img2" src="图片6.jpg"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img class="img2" src="图片2.jpg"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <footer>
+                <p id="xx"></p>
+            </footer>
+            <div class="clear"></div>
+        </div>
+    </body>
+
+    </html>
+    <script>
+        var xx = document.getElementById('xx')
+        xx.innerHTML=itime()
+
+        setInterval(function(){
+            xx.innerHTML=itime()
+
+        },1000)
+
+        function itime() {
+            var date = new Date();
+            this.year = date.getFullYear();
+            this.month = date.getMonth() + 1;
+            this.date = date.getDate();
+            this.day = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六")[date.getDay()];
+            this.hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+            this.minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            this.second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+            var currentTime = + this.year + "年" + this.month + "月" + this.date + "日 " + this.hour + ":" + this.minute + ":" + this.second + " " + this.day;
+            return(currentTime)
+        }
+    </script></doctype>
+
+

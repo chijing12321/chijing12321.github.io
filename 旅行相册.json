@@ -1,0 +1,40 @@
+// 初始化百度地图
+var map = new BMap.Map("map-container");
+var point = new BMap.Point(100.2,25.8); // 初始化地图中心点
+map.centerAndZoom(point, 11);
+map.enableScrollWheelZoom(true);
+ 
+var coordsDisplay = document.getElementById('coords');
+var photoAlbum = document.getElementById('photo-album');
+var photoUpload = document.getElementById('photo-upload');
+var uploadBtn = document.getElementById('upload-btn');
+ 
+// 地图点击事件
+map.addEventListener("click", function(e) {
+    var lng = e.point.lng;
+    var lat = e.point.lat;
+    coordsDisplay.innerText = `经度: ${lng}, 纬度: ${lat}`;
+    
+    // 可以在这里添加额外的逻辑，比如保存坐标到某个变量中
+    currentCoords = { lng: lng, lat: lat };
+});
+ 
+// 上传照片功能
+uploadBtn.addEventListener('click', function() {
+    var file = photoUpload.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            img.dataset.coords = `${currentCoords.lng},${currentCoords.lat}`;
+            photoAlbum.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        alert("请先选择一张照片！");
+    }
+});
+ 
+// 确保在点击地图后有保存当前坐标
+var currentCoords = null;

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅行足迹</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.3/leaflet.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.3/leaflet-src.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/proj4js/2.8.0/proj4.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/proj4leaflet/1.0.2/proj4leaflet.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #mapdiv {
+        position:relative; /* 确保地图不会被侧边栏覆盖 */
+    }
+ 
+    #sidebar {
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* 添加一些阴影以增强立体感 */
+        font-size: 14px;
+        color: #333;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #f9f9f9;
+        width: 25%;
+        height: 100vh;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+ 
+    #sidebar h2 {
+        background-color: #4CAF50; /* 绿色标题背景 */
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        margin-top: 0;
+    }
+    #sidebar p {
+        margin:10px 0;
+        text-indent: 2em; 
+    }
+ 
+    #location {
+        position: fixed;
+        padding: 5px;
+        left: 0;
+        bottom: 0;
+        background-color: #fff;
+        z-index: 999;
+        font-size: 12px;
+        border-top-right-radius: 5px;
+        width: 255px;
+        }
+ 
+        .leaflet-grab {
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div id="mapdiv" style="width:100vw;height:100vh"></div> -->
+    <div id="mapdiv" style="width: 72vw;height:100vh;float:left;"></div>
+    <div id="sidebar">
+        <h2>旅游介绍</h2>
+        <p>大理市位于中国云南省的西部，是一座古老而神秘的小城，以其独特的自然风光、深厚的历史底蕴和浓郁的民俗风情而闻名。</p>
+        <h3>大理市拥有令人叹为观止的美景。</h3>
+        <p>1、苍山十九峰巍峨壮观，云雾缭绕，仿佛人间仙境。</p>
+        <p>2、洱海湖水清澈、水产丰富和悠闲田园风光，吸引着无数游客的目光。</p>
+        <p>3、蝴蝶泉位于横断山脉的点苍山十九峰—云弄峰下，镶嵌在苍山洱海之间，以泉、蝶、树“三绝”著称于世，每年春夏之交，尤其是农历4月15日蝴蝶会之际，成千上万的蝴蝶聚于泉边，漫天飞舞。</p>
+        <p></p>
+        <h3>大理有着醇厚的人文历史文化。</h3>
+        <p>1、大理古城始建于唐代，至今已有千余年的历史。城内的街道、建筑和历史遗迹，都讲述着大理的往昔。漫步在古城的青石板路上，两旁是白族特色的民居和商铺，让人仿佛穿越回了那个古老的时代。夜晚的古城更是灯火阑珊，更显神秘和浪漫。</p>
+        <p>2、崇圣寺三塔文化旅游区也是大理的重要景点之一，这里集苍洱观光、文物古迹、佛教文化、休闲娱乐为一体，是游客了解大理历史文化的重要窗口。</p>
+        <p>3、双廊古镇位于大理市东北端，洱海东北岸，是云南省省级历史文化名镇和“沧海风光第一镇”</p>
+        <p>4、小普陀岛为石灰岩岛，面积约100平方米。 高出水面12米。 因岛形若一颗金印浮于水面，相传是当年观音大士辟大理留下的镇海之印。 又因岛形和楼阁颇似我国神话中传说的南海普陀山，故名。 岛上阁楼建于明代，两层歇山式。 第一层塑有如来，第二层塑有观音。 楼阁小巧玲珑，神雾缭绕，仙风徐徐。</p>
+        <p>5、大理白族自治州博物馆，整体具有“三坊一照壁，四合五天井”的白族民居建筑风格，四周苍松翠柏，环境幽雅，堪称白族建筑艺术圣殿。以南诏大理国时期的历史文物为重点，以青铜、陶瓷和石刻艺术为主体，彰显白族民俗特色。</p>
+        <p>6、喜洲古镇东临洱海，西枕苍山，是重要的白族聚居的城镇，这里有着保存最多、最好的白族民居建筑群。雕梁画栋、斗拱重叠、翘角飞檐、门楼、照壁、山墙的彩画装饰艺术绚丽多姿，充分体现了白族人民的建筑才华和艺术创造力。</p>
+        <h3>大理拥有独特的民族风情</h3>
+            <p>游客可以品尝到地道的白族美食，如大理砂锅酸汤鱼、大理凉粉、大理烤乳扇等此外，白族的三道茶也是大理独有的文化体验，同时还能欣赏到白族的歌舞表演。</p>
+    </div>
+    <div id="location"></div>
+
+    <script>
+    L.CRS.Baidu = new L.Proj.CRS('EPSG:900913', '+proj=merc +a=6378206 +b=6356584.314245179 +lat_ts=0.0 +lon_0=0.0 +x_0=0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs', {
+            resolutions: function () {
+                var level = 19;
+                var re = 18;
+                var res = [];
+                res[0] = Math.pow(2, re);
+                for (var i = 1; i < level; i++) {
+                    res[i] = Math.pow(2, (re - i));
+                }
+                return res;
+            }(),
+            origin: [0, 0],
+            bounds: L.bounds([20037508.342789244, 0], [0, 20037508.342789244])
+        });
+        L.tileLayer.baidu = function (option) {
+            option = option || {};
+            var layer;
+            var subdomains = '0123456789';
+            switch (option.layer) {
+                case "vec":
+                default:
+                    layer = L.tileLayer('https://maponline0.bdimg.com/tile/?qt=vtile&x={x}&y={y}&z={z}&styles=pl&scaler=2&udt=20230105&from=jsapi2_0', {
+                        name: option.name, subdomains: subdomains, tms: true
+                    });
+                    break;
+                    case "img_d":
+            layer = L.tileLayer('http://shangetu{s}.map.bdimg.com/it/u=x={x};y={y};z={z};v=009;type=sate&fm=46', {
+                name: option.name, subdomains: subdomains, tms: true
+            });
+            break;
+        case "img_z":
+            layer = L.tileLayer('http://online{s}.map.bdimg.com/tile/?qt=tile&x={x}&y={y}&z={z}&styles=' + (option.bigfont ? 'sh' : 'sl') + '&v=020', {
+                name: option.name, subdomains: subdomains, tms: true
+            });
+            break;
+
+        case "custom"://Custom 各种自定义样式
+            //可选值：dark,midnight,grayscale,hardedge,light,redalert,googlelite,grassgreen,pink,darkgreen,bluish
+            option.customid = option.customid || 'midnight';
+            layer = L.tileLayer('http://api{s}.map.bdimg.com/customimage/tile?&x={x}&y={y}&z={z}&scale=1&customid=' + option.customid, {
+                name: option.name, subdomains: "012", tms: true
+            });
+            break;
+
+        case "time"://实时路况
+            var time = new Date().getTime();
+            layer = L.tileLayer('http://its.map.baidu.com:8002/traffic/TrafficTileService?x={x}&y={y}&level={z}&time=' + time + '&label=web2D&v=017', {
+                name: option.name, subdomains: subdomains, tms: true
+            });
+            break;
+
+        //合并
+        case "img":
+            layer = L.layerGroup([
+                L.tileLayer.baidu({ name: "底图", layer: 'img_d', bigfont: option.bigfont }),
+                L.tileLayer.baidu({ name: "注记", layer: 'img_z', bigfont: option.bigfont })
+            ]);
+            break;
+            }
+            return layer;
+        };
+ 
+        $(document).ready(function () {
+            var options = {
+                center: [25.8, 100.2], // The initial center(baidu BD-09 format) of map
+                zoom: 11, // initial zoom of map
+                crs: L.CRS.Baidu,
+                layers: [new L.tileLayer.baidu({ layer: 'vec' })]
+            };
+            var map = L.map("mapdiv", options);
+ 
+            var markers = [
+                { lat: 25.91, lng: 100.10, info: "蝴蝶泉，风光秀丽，泉水清澈，更具有天下罕见的奇观——蝴蝶会，每到此时，成千上万的蝴蝶从四面八方飞来，在泉边漫天飞舞。" },
+                { lat: 25.92, lng: 100.09, info: "上关花·天龙洞景区，园内种满各种各样的花卉，每到春夏季节便花团锦簇，争奇斗艳" },
+                { lat: 25.66, lng: 100.12, info: "苍山，风光秀美，主峰的积雪风光巍峨壮观，是大理著名的“风花雪月”四景之一，可俯瞰大理坝子和洱海风光。" },
+                { lat: 25.69, lng: 100.16, info: "大理古城，大理古城位于风光秀丽的苍山脚下，是古代南诏国和大理国的都城。" },
+                { lat: 25.70, lng: 100.15, info: "崇圣寺三塔，是大理国时期的皇家寺院，大理历史上首个规模最为宏大的古刹。以寺中一大二小三塔闻名于世，又称“大理三塔”，是中国著名的佛塔之一。" },
+                { lat: 25.61, lng: 100.25, info: "洱海,“风花雪月”四大名景之一，外形如同耳朵，是由西洱河塌陷形成的高原湖泊。共有三岛、四洲、五湖、九曲，湖水清澈见底，被称作“群山间的无瑕美玉”。"},
+                { lat: 25.92, lng: 100.20, info: "双廊古镇，位于洱海东北岸，紧靠碧波荡漾的洱海，可远眺苍山十九峰，集苍洱风光之精华于一处。" },
+                { lat: 25.86, lng: 100.14, info: "喜洲古镇，有着千年历史的白族历史文化名镇，具有浓郁的民族风情和历史文化气息。" },
+                { lat: 25.60, lng: 100.24, info: "大理白族自治州博物馆，整体具有“三坊一照壁，四合五天井”的白族民居建筑风格，四周苍松翠柏，环境幽雅，堪称白族建筑艺术圣殿。以南诏大理国时期的历史文物为重点，以青铜、陶瓷和石刻艺术为主体，彰显白族民俗特色。" },
+                { lat: 25.70, lng: 100.21, info: "龙龛码头，风景绝佳，位于洱海边上，从圆形拱门可以看见洱海对面的罗荃塔。" },
+                { lat: 25.81, lng: 100.23, info: "小普陀，位于距离洱海岸边大约二十多米的湖中，是一个袖珍小岛。始建于明代，1982年重修，为亭阁式两层建筑；一层祀如来菩萨，二层祀观音菩萨。" }
+            ];
+ 
+            markers.forEach(marker => {
+                L.marker([marker.lat, marker.lng]).addTo(map)
+                    .bindPopup(marker.info)
+  
+            });
+ 
+            map.on('click', (e) => {
+                let lnglat = e.latlng.lng + ',' + e.latlng.lat;
+                $('#location')[0].innerText = lnglat;
+            });
+
+            window.map = map;
+        });
+    </script>
+</body>
+</html>

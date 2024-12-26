@@ -1,0 +1,53 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+
+<head> 
+    <meta charset="UTF-8"> 
+    <meta http-equiv="X-UA-Compatible"
+        content="IE=edge"> 
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0"> 
+    <title>心情随笔</title> 
+    <link rel="stylesheet" href="心情随笔.css"> 
+    <style>
+        h1 {
+            font-family: 'Arial', sans-serif; /* 基础字体 */
+            font-size: 3em; /* 字体大小 */
+            color: #333; /* 字体颜色 */
+            text-shadow: 
+                1px 1px 0 #fff, 
+                -1px -1px 0 #000,  
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                0 1px 0 #000,
+                0 -1px 0 #000,
+                1px 0 0 #000,
+                -1px 0 0 #000; /* 阴影效果，模拟花体 */
+            margin-top:1em; /* 底部外边距 */
+            transform: rotate(-2deg); /* 轻微旋转 */
+        }
+    </style>
+</head> 
+
+
+<body> 
+    <div class="btn"> 
+    <div class="heading"> 
+        <h1>心情随笔</h1> 
+        </div> 
+        <button id="addBtn"> 
+            <i class="fas fa-plus"></i> 
+            新建笔记 
+        </button> 
+    </div> 
+    <div id="main"> 
+
+    </div> 
+    <script src= 
+"https://kit.fontawesome.com/bf520e6492.js"
+            crossorigin="anonymous"> 
+    </script> 
+    <script src="app.js"></script> 
+</body> 
+
+</html>
